@@ -12,12 +12,14 @@ and Network ID to connect to the correct chain.
 
 Your feedback and contributions are welcome!
 
-## Improve
+## fork improvements
 
- - Support WalletConnect
+ - support WalletConnect (but some mobile wallet not support custom network)
  - fix `Add to Wallet` issue
+ - search debounce
  - UI minor update
  - chain icons update
+ - chains static data for load performance, and sync from [chains](https://github.com/ethereum-lists/chains) every 5 minutes automatically.
 
 ## Licence
 

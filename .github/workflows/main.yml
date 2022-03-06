@@ -1,0 +1,27 @@
+name: update chains
+
+on:
+  pull_request:
+  push:
+    branches:
+      - test
+      - main
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  update-chains:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: update chains
+        run: |
+          wget https://chainid.network/chains.json -O chains.json
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: update chains
