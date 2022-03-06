@@ -175,7 +175,7 @@ function Home({ changeTheme, theme }) {
                         </InputAdornment>,
                         startAdornment: <InputAdornment position="start">
                           <Typography className={ classes.searchInputAdnornment }>
-                            Search Networks
+                            Search
                           </Typography>
                         </InputAdornment>
                       }}
