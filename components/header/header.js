@@ -14,8 +14,6 @@ import {
   ACCOUNT_CONFIGURED
 } from '../../stores/constants'
 
-// import Unlock from '../unlock'
-
 import stores from '../../stores'
 import { formatAddress, getProvider } from '../../utils'
 
@@ -74,10 +72,8 @@ const StyledSwitch = withStyles((theme) => ({
 });
 
 function Header(props) {
-
   const [ account, setAccount ] = useState(null)
   const [ darkMode, setDarkMode ] = useState(props.theme.palette.type === 'dark' ? true : false);
-  const [ unlockOpen, setUnlockOpen ] = useState(false);
 
   useEffect(() => {
     const accountConfigure = () => {
@@ -121,7 +117,7 @@ function Header(props) {
   }
 
   useEffect(function() {
-    const localStorageDarkMode = window.localStorage.getItem('yearn.finance-dark-mode')
+    const localStorageDarkMode = window.localStorage.getItem('chain-list-dark-mode')
     setDarkMode(localStorageDarkMode ? localStorageDarkMode === 'dark' : false)
   },[]);
 

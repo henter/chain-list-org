@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import SnackbarController from '../components/snackbar'
-import ShutdownNotice from '../components/shutdownNotice'
-
 import stores from '../stores/index.js'
 
 import {
@@ -21,12 +18,12 @@ function MyApp({ Component, pageProps }) {
 
   const changeTheme = (dark) => {
     setThemeConfig(dark ? darkTheme : lightTheme)
-    localStorage.setItem("yearn.finance-dark-mode", dark ? "dark" : "light");
+    localStorage.setItem("chain-list-dark-mode", dark ? "dark" : "light");
   }
 
   useEffect(function() {
     const localStorageDarkMode = window.localStorage.getItem(
-      "yearn.finance-dark-mode"
+      "chain-list-dark-mode"
     );
     changeTheme(localStorageDarkMode ? localStorageDarkMode === "dark" : false);
   }, []);
@@ -35,19 +32,11 @@ function MyApp({ Component, pageProps }) {
     stores.dispatcher.dispatch({ type: CONFIGURE })
   },[]);
 
-  // const [shutdownNoticeOpen, setShutdownNoticeOpen] = useState(true);
-  // const closeShutdown = () => {
-  //   setShutdownNoticeOpen(false)
-  // }
-
   return (
     <ThemeProvider theme={ themeConfig }>
       <CssBaseline />
       <Component {...pageProps} changeTheme={ changeTheme } />
-      <SnackbarController />
-      {/*{ shutdownNoticeOpen &&*/}
-      {/*  <ShutdownNotice close={ closeShutdown } />*/}
-      {/*}*/}
+
     </ThemeProvider>
   )
 }

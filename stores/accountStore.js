@@ -8,8 +8,24 @@ import {
 } from './constants';
 
 import stores from './'
-
+import { ethers } from "ethers";
 import Web3 from 'web3';
+import Web3Modal from "web3modal";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+
+const providerOptions = {
+  walletconnect: {
+    package: WalletConnectProvider,
+    options: {
+      infuraId: process.env.NEXT_PUBLIC_INFURA_PROJECT_ID,
+    },
+  },
+};
+
+let instance;
+let provider;
+let signer;
+let web3;
 
 class Store {
   constructor(dispatcher, emitter) {
@@ -48,28 +64,7 @@ class Store {
   };
 
   configure = async () => {
-    // if (window.ethereum) {
-    //   window.web3 = new Web3(ethereum);
-    //   try {
-    //     await ethereum.enable();
-    //     var accounts= await web3.eth.getAccounts();
-    //     this.setStore({ account: { address: accounts[0] }, web3: window.web3 })
-    //     this.emitter.emit(ACCOUNT_CONFIGURED)
-    //   } catch (error) {
-    //     // User denied account access...
-    //   }
-    //
-    //   this.updateAccount()
-    //
-    // } else if (window.web3) {
-    //   window.web3 = new Web3(web3.currentProvider);
-    //   // Acccounts always exposed
-    //   web3.eth.sendTransaction({/* ... */});
-    // }
-    // // Non-dapp browsers...
-    // else {
-    //   console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
-    // }
+
   };
 
   updateAccount = () => {
@@ -81,45 +76,22 @@ class Store {
     })
   }
 
-  getWeb3Provider = async () => {
-    let web3context = this.getStore('web3context')
-    let provider = null
-
-    if(!web3context) {
-      provider = network.providers['1']
-    } else {
-      provider = web3context.library.provider
-    }
-
-    if(!provider) {
-      return null
-    }
-    return new Web3(provider);
-
-  }
 
   tryConnectWallet = async () => {
-    if (window.ethereum) {
-      window.web3 = new Web3(ethereum);
-      try {
-        await ethereum.enable();
-        var accounts= await web3.eth.getAccounts();
-        this.setStore({ account: { address: accounts[0] }, web3: window.web3 })
-        this.emitter.emit(ACCOUNT_CONFIGURED)
-      } catch (error) {
-          // User denied account access...
-      }
-    }
-    // Legacy dapp browsers...
-    else if (window.web3) {
-      window.web3 = new Web3(web3.currentProvider);
-      var accounts= await web3.eth.getAccounts();
-      this.setStore({ account: { address: accounts[0] }, web3: window.web3 })
+    let web3ModelInstance = new Web3Modal({
+      providerOptions,
+    });
+    instance = await web3ModelInstance.connect();
+    provider = new ethers.providers.Web3Provider(instance);
+    console.log('provider', provider)
+    signer = provider.getSigner();
+    web3 = new Web3(provider);
+
+    const address = await signer.getAddress();
+    console.log(address);
+    if (address) {
+      this.setStore({ account: { address: address }, web3: web3})
       this.emitter.emit(ACCOUNT_CONFIGURED)
-    }
-    // Non-dapp browsers...
-    else {
-      console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
     }
   }
 }

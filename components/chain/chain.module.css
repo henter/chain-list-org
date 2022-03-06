@@ -22,14 +22,11 @@
 
 .dataPoint {
   flex: 1;
+  margin-right: 10px;
 }
 
 .dataPointHeader {
   padding-bottom: 7px;
-}
-
-.avatar {
-  margin-right: 24px;
 }
 
 .chainNameContainer {

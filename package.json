@@ -1,6 +1,6 @@
 {
-  "name": "networklist",
-  "version": "1.0.0",
+  "name": "chan-list-org",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,14 +10,17 @@
     "start": "next start"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
+    "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.57",
-    "flux": "^4.0.1",
-    "next": "10.0.7",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "swr": "^0.5.6",
-    "web3": "^1.3.4"
+    "@material-ui/lab": "^4.0.0-alpha.60",
+    "@walletconnect/web3-provider": "^1.7.3",
+    "ethers": "^5.5.4",
+    "flux": "^4.0.3",
+    "next": "12.1.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "swr": "^1.2.2",
+    "web3": "^1.7.1",
+    "web3modal": "^1.9.5"
   }
 }
