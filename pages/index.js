@@ -82,15 +82,17 @@ function Home({ changeTheme, theme }) {
 
   const [ layout, setLayout ] = useState('grid')
   const [ search, setSearch ] = useState('')
-  const [ hideMultichain, setHideMultichain ] = useState('1')
+  const [debouncedTerm, setDebouncedTerm] = useState(search);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setSearch(debouncedTerm), 200);
+    return () => clearTimeout(timer);
+  }, [debouncedTerm])
+
   const router = useRouter()
   if (router.query.search) {
     setSearch(router.query.search)
     delete router.query.search
-  }
-
-  const onSearchChanged = (event) => {
-    setSearch(event.target.value)
   }
 
   const handleLayoutChanged = (event, newVal) => {
@@ -103,15 +105,6 @@ function Home({ changeTheme, theme }) {
   const addNetwork = () => {
     window.open('https://github.com/ethereum-lists/chains', '_blank')
   }
-
-  useEffect(() => {
-    const multi = localStorage.getItem('chainlist.org-hideMultichain')
-    if(multi) {
-      setHideMultichain(multi)
-    } else {
-      setHideMultichain('0')
-    }
-  }, [])
 
   return (
     <div className={styles.container}>
@@ -167,8 +160,8 @@ function Home({ changeTheme, theme }) {
                       className={ classes.searchContainer }
                       variant="outlined"
                       placeholder="ETH, Fantom, ..."
-                      value={ search }
-                      onChange={ onSearchChanged }
+                      // value={ search }
+                      onChange={e => setDebouncedTerm(e.target.value)}
                       InputProps={{
                         endAdornment: <InputAdornment position="end">
                           <SearchIcon fontSize="small"  />
