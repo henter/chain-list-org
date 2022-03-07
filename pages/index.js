@@ -77,6 +77,15 @@ const searchTheme = createTheme({
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
+const hotChainIds = [
+    56, //bsc
+    43114, //Avalanche C-Chain
+    250,//ftm
+    137,//matic
+  1313161554, //aurora
+  9001, //evmos
+]
+
 function Home({ changeTheme, theme }) {
   //const { data, error } = useSWR('https://chainid.network/chains.json', fetcher)
 
@@ -178,23 +187,46 @@ function Home({ changeTheme, theme }) {
               </div>
               <Header changeTheme={ changeTheme } />
             </div>
-            <div className={ classes.cardsContainer }>
-              {
-                data && data.filter((chain) => {
-                  if(search === '') {
-                    return true
-                  } else {
-                    //filter
-                    return (chain.chain.toLowerCase().includes(search.toLowerCase()) ||
-                    chain.chainId.toString().toLowerCase().includes(search.toLowerCase()) ||
-                    chain.name.toLowerCase().includes(search.toLowerCase()) ||
-                    (chain.nativeCurrency ? chain.nativeCurrency.symbol : '').toLowerCase().includes(search.toLowerCase()))
-                  }
-                }).map((chain, idx) => {
-                  return <Chain chain={ chain } key={ idx } />
-                })
-              }
-            </div>
+
+            {
+              search ? (
+                  <div className={ classes.cardsContainer }>
+                    {
+                        data && data.filter((chain) => {
+                          return (chain.chain.toLowerCase().includes(search.toLowerCase()) ||
+                              chain.chainId.toString().toLowerCase().includes(search.toLowerCase()) ||
+                              chain.name.toLowerCase().includes(search.toLowerCase()) ||
+                              (chain.nativeCurrency ? chain.nativeCurrency.symbol : '').toLowerCase().includes(search.toLowerCase()))
+                        }).map((chain, idx) => {
+                          return <Chain chain={ chain } key={ idx } />
+                        })
+                    }
+                  </div>
+              ) : (
+                  <>
+                    <h2 style={{padding: "0 48px"}}>Hot Network</h2>
+                    <div className={ classes.cardsContainer }>
+                      {
+                          data && data.filter(c => {
+                            return hotChainIds.includes(c.chainId)
+                          }).map((chain, idx) => {
+                            return <Chain chain={ chain } key={ idx } />
+                          })
+                      }
+                    </div>
+
+                    <h2 style={{padding: "0 48px"}}>All Network</h2>
+                    <div className={ classes.cardsContainer }>
+                      {
+                          data && data.map((chain, idx) => {
+                            return <Chain chain={ chain } key={ idx } />
+                          })
+                      }
+                    </div>
+                  </>
+              )
+            }
+
           </div>
         </div>
       </main>

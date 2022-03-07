@@ -33,12 +33,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 48px;
-  padding-top: 24px;
   position: sticky;
   top: 0;
   background: linear-gradient(rgba(243, 243, 243, 1) 90%, rgba(243, 243, 243, 0) 100%);
-  padding: 24px 80px 48px 80px;
+  padding: 24px 80px 24px 80px;
   z-index: 1;
 }
 
@@ -47,12 +45,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 48px;
-  padding-top: 24px;
   position: sticky;
   top: 0;
   background: linear-gradient(rgba(35, 37, 46, 1) 90%, rgba(35, 37, 46, 0) 100%);
-  padding: 24px 80px 48px 80px;
+  padding: 24px 80px 24px 80px;
   z-index: 1;
 }
 
@@ -61,7 +57,7 @@
   width: 100%;
   align-items: flex-start;
   background: #f3f3f3;
-  padding: 0px 24px 24px;
+  padding: 0 24px 24px;
 }
 
 .listContainerDark {
@@ -69,11 +65,11 @@
   width: 100%;
   align-items: flex-start;
   background: #23252e;
-  padding: 0px 24px;
+  padding: 0 24px;
 }
 
 .cardsContainer {
-  padding: 0px 80px;
+  padding: 0 80px;
   display: grid;
   grid-template-columns: calc(33% - 15px) calc(33% - 15px) calc(33% - 15px);
   gap: 30px;
@@ -165,11 +161,11 @@
 
   .headerContainer,
   .headerContainerDark {
-    padding: 24px 48px 48px 48px;
+    padding: 24px 48px 24px 48px;
   }
 
   .cardsContainer {
-    padding: 0px 48px 48px;
+    padding: 0 48px 48px;
   }
 }
 

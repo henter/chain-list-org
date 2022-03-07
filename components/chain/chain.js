@@ -11,6 +11,7 @@ import { getProvider } from '../../utils'
 
 import {
   ERROR,
+  SUCCESS,
   CONNECT_WALLET,
   TRY_CONNECT_WALLET,
   ACCOUNT_CONFIGURED
@@ -118,35 +119,24 @@ export default function Chain({ chain }) {
       console.log('no wallet env, please install MetaMask or other wallet')
       return
     }
-    let ok = false
+
     try {
       await provider.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: toHex(chain.chainId) }],
+        method: 'wallet_addEthereumChain',
+        params: [params, account],
       }).then(result => {
-        ok = true
+        stores.emitter.emit(SUCCESS, 'Add Network Success')
       });
-    } catch (switchError) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError.code === 4902) {
-        try {
-          await provider.request({
-            method: 'wallet_addEthereumChain',
-            params: [params, account],
-          }).then(result => {
-            ok = true
-          });
-        } catch (error) {
-          stores.emitter.emit(ERROR, error.message ? error.message : error)
-          console.log(error)
-        }
+    } catch (error) {
+      let msg = error.message ? error.message : error
+      if (msg.indexOf('specify default') > 0) {
+        stores.emitter.emit(SUCCESS, 'network already exist')
+        return
       }
-      console.log(switchError)
-      // handle other "switch" errors
+      stores.emitter.emit(ERROR, msg)
+      console.log(error)
     }
-    console.log('add network result', ok)
-    if (!ok) {
-    }
+
   }
 
   const renderProviderText = () => {
