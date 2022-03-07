@@ -3,7 +3,7 @@
 
 https://chain-list.org
 
-![](https://raw.githubusercontent.com/henter/chain-list-org/main/public/homepage.png)
+[![chain-list.org](https://raw.githubusercontent.com/henter/chain-list-org/main/public/homepage.png)](https://chain-list.org)
 
 ### Helping users connect to EVM powered networks
 ChainList is a list of EVM networks, fork from [networklist-org](https://github.com/antonnell/networklist-org).
