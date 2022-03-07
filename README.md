@@ -3,6 +3,8 @@
 
 https://chain-list.org
 
+![](https://raw.githubusercontent.com/henter/chain-list-org/main/public/homepage.png)
+
 ### Helping users connect to EVM powered networks
 ChainList is a list of EVM networks, fork from [networklist-org](https://github.com/antonnell/networklist-org).
 Users can use the information to connect their wallets 
